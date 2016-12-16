@@ -49,7 +49,10 @@ ONBUILD WORKDIR /go/src/app
 
 # For some reason go comes with `go vet` and `gofmt` but not with `golint`
 ONBUILD RUN go get -u github.com/golang/lint/golint
-ONBUILD RUN go get -v ./...
+# Download
+ONBUILD RUN go get -v　-d .
+# Install
+ONBUILD RUN go get -v .
 
 ONBUILD COPY . /go/src/app
 ONBUILD RUN go build
