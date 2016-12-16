@@ -42,9 +42,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		python-setuptools \
   && easy_install qtfaststart
 
-ONBUILD RUN mkdir -p /go/src/$APP_PATH
-ONBUILD COPY ./vendor /go/src/$APP_PATH/vendor
+ONBUILD RUN mkdir -p /go/src/$APP_PATH/vendor
+ONBUILD COPY ./vendor/manifest /go/src/$APP_PATH/vendor
 ONBUILD WORKDIR /go/src/$APP_PATH
+
 ONBUILD RUN go get -v ./...
+
 ONBUILD COPY . /go/src/$APP_PATH
 ONBUILD RUN go build
