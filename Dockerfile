@@ -48,7 +48,6 @@ ONBUILD COPY ./vendor/manifest /go/src/app/vendor
 ONBUILD WORKDIR /go/src/app
 
 # For some reason go comes with `go vet` and `gofmt` but not with `golint`
-ONBUILD RUN go get -u golang.org/x/tools/go/gcexportdata
 ONBUILD RUN go get -u github.com/golang/lint/golint
 ONBUILD RUN go get -v ./...
 
