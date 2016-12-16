@@ -42,6 +42,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		python-setuptools \
   && easy_install qtfaststart
 
+# For some reason go comes with `go vet` and `gofmt` but not with `golint`
+RUN go get -u github.com/golang/lint/golint
+
 ONBUILD RUN mkdir -p /go/src/$APP_PATH/vendor
 ONBUILD COPY ./vendor/manifest /go/src/$APP_PATH/vendor
 ONBUILD WORKDIR /go/src/$APP_PATH
