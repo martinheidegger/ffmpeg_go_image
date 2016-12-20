@@ -42,17 +42,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		python-setuptools \
   && easy_install qtfaststart
 
-ONBUILD RUN mkdir -p /go/src/app/vendor
-ONBUILD RUN echo /go/src/app
-ONBUILD COPY ./vendor/manifest /go/src/app/vendor
-ONBUILD WORKDIR /go/src/app
+
+WORKDIR /go/src
 
 # For some reason go comes with `go vet` and `gofmt` but not with `golint`
-ONBUILD RUN go get -u github.com/golang/lint/golint
-# Download
-ONBUILD RUN go get -v　-d .
-# Install
-ONBUILD RUN go get -v .
+RUN go get -u github.com/golang/lint/golint
 
-ONBUILD COPY . /go/src/app
-ONBUILD RUN go build
+# Of the dependency management we should use gvt
+RUN go get -u github.com/FiloSottile/gvt
+
+# Copy vendor first to install and cache the dependencies
+ONBUILD COPY ./vendor $GOPATH/src/vendor
+
+# Get all the dependencies
+ONBUILD RUN gvt restore
+
+# We assume that the source code is properly in source
+ONBUILD COPY src $GOPATH/src
