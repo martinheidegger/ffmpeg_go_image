@@ -59,5 +59,11 @@ ONBUILD RUN cd $GOPATH/src/; gvt restore
 # We assume that the source code is properly in source
 ONBUILD COPY src $GOPATH/src
 
+# Add all bin files to the go bin folder
+ONBUILD COPY bin $GOPATH/bin
+
+# Add Makefile for eventual builds - culture effort
+ONBUILD ADD Makefile $GOPATH
+
 # Switch to /go/bin folder because usually you want
 ONBUILD WORKDIR /go/bin
