@@ -1,4 +1,4 @@
-FROM cellofellow/ffmpeg@sha256:d1733494f695eea4ad6e004187465be8798b0ec68df2242fd0c879b1813b56cd
+FROM cellofellow/ffmpeg@sha256:1dae0b5235b2385cfcd6ab23350b0ff246769ec0c7d398ff60b68f2af2810ebc
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl
