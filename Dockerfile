@@ -42,13 +42,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		python-setuptools \
   && easy_install qtfaststart
 
-WORKDIR /go/src
-
 # For some reason go comes with `go vet` and `gofmt` but not with `golint`
 RUN go get -u github.com/golang/lint/golint
 
 # Of the dependency management we should use gvt
 RUN go get -u github.com/FiloSottile/gvt
+
+# Switch to the src workdir for gvt restore
+WORKDIR /go/src
 
 # Copy vendor first to install and cache the dependencies
 ONBUILD COPY ./src/vendor $GOPATH/src/vendor
@@ -65,5 +66,6 @@ ONBUILD COPY bin $GOPATH/bin
 # Add Makefile for eventual builds - culture effort
 ONBUILD ADD Makefile $GOPATH
 
-# Switch to /go/bin folder because usually you want
-ONBUILD WORKDIR /go/bin
+# Switch to /go folder again because the Makefile is in there and it is in
+# relation to the source folder as you would have it in a users image
+ONBUILD WORKDIR $GOPATH
