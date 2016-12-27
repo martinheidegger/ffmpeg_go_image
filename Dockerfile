@@ -20,6 +20,11 @@ RUN apt-get update \
 		python-setuptools \
   && easy_install qtfaststart
 
+
+ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
+COPY go-wrapper /usr/local/bin/
+WORKDIR $GOPATH
+
 # gcc for cgo
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
@@ -36,12 +41,6 @@ RUN apt-get update \
 	&& chmod -R 777 "$GOPATH" \
 	&& go get -u github.com/golang/lint/golint \
 	&& go get -u github.com/FiloSottile/gvt
-
-WORKDIR $GOPATH
-
-ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
-
-COPY go-wrapper /usr/local/bin/
 
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
