@@ -9,26 +9,33 @@ ENV GOLANG_DOWNLOAD_URL https://golang.org/dl/go$GOLANG_VERSION.linux-amd64.tar.
 ENV GOLANG_DOWNLOAD_SHA256 47fda42e46b4c3ec93fa5d4d4cc6a748aa3f9411a2a2b7e08e3a6d80d753ec8b
 ENV GOPATH /go
 
-# gcc for cgo
-RUN apt-get update && apt-get install -y --no-install-recommends \
-		curl \
+RUN apt-get update \
+	&& apt-get install -y --no-install-recommends \
+		curl \
 		wget \
+		git \
 		libexif-dev \
 		imagemagick \
 		gifsicle \
 		python-setuptools \
+  && easy_install qtfaststart
+
+# gcc for cgo
+RUN apt-get update \
+	&& apt-get install -y --no-install-recommends \
 		g++ \
 		gcc \
 		libc6-dev \
 		make \
-    easy_install qtfaststart \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& curl -fsSL "$GOLANG_DOWNLOAD_URL" -o golang.tar.gz \
 	&& echo "$GOLANG_DOWNLOAD_SHA256  golang.tar.gz" | sha256sum -c - \
 	&& tar -C /usr/local -xzf golang.tar.gz \
 	&& rm golang.tar.gz \
 	&& mkdir -p "$GOPATH/src" "$GOPATH/bin" \
-  && chmod -R 777 "$GOPATH"
+	&& chmod -R 777 "$GOPATH" \
+	&& go get -u github.com/golang/lint/golint \
+	&& go get -u github.com/FiloSottile/gvt
 
 WORKDIR $GOPATH
 
@@ -37,11 +44,6 @@ ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 COPY go-wrapper /usr/local/bin/
 
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-# For some reason go comes with `go vet` and `gofmt` but not with `golint`
-RUN go get -u github.com/golang/lint/golint \
-    # For the dependency management we should use gvt
-    && go get -u github.com/FiloSottile/gvt
 
 # Switch to the src workdir for gvt restore
 WORKDIR $GOPATH/src
