@@ -23,6 +23,7 @@ RUN apt-get update \
 		imagemagick \
 		gifsicle \
 		python-setuptools \
+    pkg-config \
 	&& easy_install qtfaststart \
 	&& apt-get install -y --no-install-recommends \
 		g++ \
