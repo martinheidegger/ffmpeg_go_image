@@ -5,11 +5,11 @@ FROM jrottenberg/ffmpeg@sha256:bce6df1ec5a67560de76968279e0024f88b259a2b6e5d9b67
 # -----------------------------------------------------------------------------------------------------------
 
 ENV \
-	GOLANG_VERSION=1.7.4 \
-	GOLANG_DOWNLOAD_URL=https://golang.org/dl/go$GOLANG_VERSION.linux-amd64.tar.gz \
+	GOLANG_DOWNLOAD_URL=https://golang.org/dl/go1.7.4.linux-amd64.tar.gz \
 	GOLANG_DOWNLOAD_SHA256=47fda42e46b4c3ec93fa5d4d4cc6a748aa3f9411a2a2b7e08e3a6d80d753ec8b \
-	GOPATH=/go \
-	PATH=$GOPATH/bin:/usr/local/go/bin:$PATH
+	GOPATH=/go
+
+ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 
 COPY go-wrapper /usr/local/bin/
 
