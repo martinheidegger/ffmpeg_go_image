@@ -45,7 +45,7 @@ RUN apt-get update \
 # Switch to the src workdir for gvt restore
 WORKDIR $GOPATH/src
 
-ENTRYPOINT ["/bin/bash", "-c"]
+ENTRYPOINT /bin/bash -c
 
 # Copy vendor first to install and cache the dependencies
 ONBUILD COPY ./src/vendor $GOPATH/src/vendor
