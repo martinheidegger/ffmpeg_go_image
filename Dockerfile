@@ -19,6 +19,7 @@ RUN apt-get update \
 		curl \
 		wget \
 		git \
+		time \
 		libexif-dev \
 		imagemagick \
 		gifsicle \
