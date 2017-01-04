@@ -52,7 +52,7 @@ ENTRYPOINT ["/bin/sh"]
 ONBUILD COPY ./src/vendor $GOPATH/src/vendor
 
 # Get all the dependencies
-ONBUILD RUN cd $GOPATH/src/; time gvt restore
+ONBUILD RUN cd $GOPATH/src/; /bin/bash -c "time gvt restore"
 
 # We assume that the source code is properly in source
 ONBUILD COPY src $GOPATH/src
