@@ -21,6 +21,7 @@ RUN apt-get update \
 		git \
 		time \
 		openssl \
+		openssh-client \
 		ca-certificates \
 		libexif-dev \
 		imagemagick \
