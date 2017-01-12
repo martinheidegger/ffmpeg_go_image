@@ -20,6 +20,8 @@ RUN apt-get update \
 		wget \
 		git \
 		time \
+		openssl \
+		ca-certificates \
 		libexif-dev \
 		imagemagick \
 		gifsicle \
