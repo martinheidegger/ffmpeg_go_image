@@ -41,6 +41,12 @@ RUN apt-get update \
 	&& rm golang.tar.gz \
 	&& mkdir -p "$GOPATH/src" "$GOPATH/bin" \
 	&& chmod -R 777 "$GOPATH" \
+    && curl -sL https://raw.githubusercontent.com/martinheidegger/install-node/master/install_node.sh | \
+       NODE_VERSION="v5.1.0" \
+       YARN_VERSION="v0.20.3" \
+       NODE_VARIANT="make" \
+       bash \
+    && yarn global add https://github.com/martinheidegger/runner-worker.git#ac41f04d3bdf32afab438077ef2b3777ae904469 \
 	&& go get -u github.com/golang/lint/golint \
 	&& go get -u github.com/FiloSottile/gvt
 
